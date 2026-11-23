@@ -187,6 +187,11 @@
       padding: 2px 6px; border-radius: 6px; margin-right: 5px;
       background: var(--sky-soft); color: #7dd3fc; vertical-align: 1px;
     }
+    .ex-caution-badge {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      padding: 2px 6px; border-radius: 6px; margin-right: 5px;
+      background: var(--amber-soft); color: #fcd34d; vertical-align: 1px;
+    }
 
     .rest-btn {
       background: var(--surface-2); border: 1px solid var(--border);
@@ -468,7 +473,7 @@
   <div class="modal-backdrop" id="redFlagModal" onclick="closeBackdrop(event, 'redFlagModal')">
     <div class="modal">
       <div class="modal-head">
-        <h3>红灯停训与医学排查提示</h3>
+        <h3>红灯停训与排查提示</h3>
         <button class="close-btn" onclick="closeModal('redFlagModal')">×</button>
       </div>
       <div style="font-size:13.5px;color:#fecdd3;background:var(--rose-soft);padding:12px;border-radius:12px;line-height:1.65;">
@@ -481,9 +486,9 @@
       <div style="font-size:13px;color:#cbd5e1;margin-top:12px;line-height:1.6;">
         <strong>核心铁律：</strong><br>
         1. 暂停用 90° 外展外旋“靠墙天使”硬顶训练。<br>
-        2. 划船拉至<strong>手肘齐躯干侧面即止</strong>，绝不向后猛拽。<br>
-        3. 左手腕零痛零弹响优先于左肩容量；单臂动作严格<strong>左侧领跑</strong>。<br>
-        4. 平躺呼吸不畅需单独完成医学排查，不直接归因于胸廓压缩。
+        2. 坐姿划船与单臂下拉拉至<strong>手肘齐躯干侧面即止</strong>，绝不向后猛拽。<br>
+        3. 双杠臂屈伸绝不深下沉压肩前，一旦左腕/肩前不适立刻切绳索下斜推胸。<br>
+        4. 单臂动作严格<strong>左侧领跑</strong>，左手腕零痛零弹响优先于容量。
       </div>
       <button class="btn-secondary" style="margin-top:14px;" onclick="closeModal('redFlagModal')">我知道了</button>
     </div>
@@ -517,21 +522,21 @@ const PHASES = {
     name: 'P1 校准消代偿',
     cycles: '第 1–2 循环（第 1–12 天）',
     rpe: '主项 RPE ≤ 7（留 3 次余力）',
-    load: '重量降至平时 80%–85%，跑通左腕绿/黄/红筛查',
-    gate: '通关门槛：全程无肩前顶出感 + 单臂左右同重同次 + 零红区腕动作残留'
+    load: '重量降至平时 80%–85%，跑通左腕绿/黄/红筛查与动作控程',
+    gate: '通关门槛：推拉全程无肩前顶出感 + 左侧轨迹对齐 + 零红区腕动作残留'
   },
   p2: {
     name: 'P2 对称递增',
     cycles: '第 3–4 循环（第 13–24 天）',
     rpe: '主项 RPE 7.5–8（留 2 次余力）',
-    load: '以左侧为基准每循环微增 2.5%–5%；肩日外旋升级 45°',
-    gate: '通关门槛：地板卧推左右轨迹对称 + 45° 外旋肩头居中 + 胸骨弹响减少'
+    load: '以左侧为基准每循环微增 2.5%–5%；肩日外旋升至 45°、面拉可略抬角',
+    gate: '通关门槛：卧推左右水平对称 + 45° 外旋肩头居中 + 胸骨弹响减少'
   },
   p3: {
     name: 'P3 扩程复测',
     cycles: '第 5–7 循环（第 25–42 天）',
     rpe: '主项 RPE ≤ 8（不冲极限）',
-    load: '地板卧推升级短程平板哑铃卧推；肩日试 75°–90° 支撑外旋',
+    load: '卧推逐步过渡至短程平板卧推；肩日尝试 75°–90° 支撑外旋与高位面拉',
     gate: '通关门槛：靠墙天使无痛复测显著改善，且肩胛下缘不再迅速酸胀'
   }
 };
@@ -581,79 +586,65 @@ const WARMUP_ITEMS = [
 
 const DAYS = [
   {
-    day: 1, code: 'D1', short: '背日', title: '第 1 天：背日（单侧纠偏主导）',
-    sub: '消除右侧偏厚代偿，同时为明天胸日保留后侧肩袖稳定储备',
+    day: 1, code: 'D1', short: '背日', title: '第 1 天：背日（保留你的 4 大习惯动作）',
+    sub: '引体向上 → 高位下拉 → 坐姿划船 → 单臂绳索下拉；嵌入控程与左侧纠偏',
     hasWarmup: true,
     items: [
       {
-        id: 'd1_1', name: '单臂绳索水平划船', sets: 4, reps: '10–12 次/侧', tempo: '2-0-1-1', rpe: '7.5', rest: 80, leftLead: true,
-        cue: '先练左侧定重定次；采用对握，吐气拉至【手肘与躯干侧面齐平即止】，绝不把手肘猛拽过身后撬动肱骨头。',
-        yellow: '死守绝对中立对握，左手佩戴双带式 TFCC 护腕。',
-        redName: '单臂绳索划船（左手助力带 / 前臂绑带）',
-        red: '左手使用助力带或用脚踝绑带直接套在前臂拉绳索，彻底绕开左手腕。'
+        id: 'd1_1', name: '引体向上（优先对握 / 略窄中立握）', sets: 4, reps: '6–10 次', tempo: '3-0-1-0', rpe: '7.5', rest: 120,
+        cue: '优先选【对握（掌心相对）】或与肩略宽握距，避开超宽正握对肩前和左手尺侧的剪力；底端不完全松垮挂肩，上拉时专注双侧同步、身体绝不向偏厚的右侧歪斜。',
+        yellow: '左手戴双带护腕，严防向小指侧撇腕；必要时加弹力带/辅助器保证轨迹对称。',
+        redName: '辅助器械对握引体（配助力带）或 合并进高位下拉',
+        red: '若自重悬垂仍引发左手尺侧不适或弹响，用助力带加辅助器械减重，或直接多做 2 组窄对握高位下拉。'
       },
       {
-        id: 'd1_2', name: '窄对握高位下拉', sets: 4, reps: '10 次', tempo: '3-0-1-1', rpe: '7.5', rest: 90,
-        cue: '掌心相对、宽约与肩同宽，在肩胛平面拉至锁骨上方；离心还原最后 1/3 刻意放慢防耸肩。',
-        yellow: '严禁换宽正握或反手旋后握，保持直腕。',
+        id: 'd1_2', name: '高位下拉（窄对握 · 肩胛平面）', sets: 4, reps: '10 次', tempo: '3-0-1-1', rpe: '7.5', rest: 90,
+        cue: '掌心相对、宽约与肩同宽，沿肩胛平面拉至锁骨上方；躯干微后倾不超过 10°，离心还原最后 1/3 放慢防耸肩。',
+        yellow: '严禁换宽正握或反手旋后握，死守直腕。',
         redName: '窄对握高位下拉（左手配助力带）',
         red: '左手配助力带分担尺侧拉扯，全程保持对握中立位。'
       },
       {
-        id: 'd1_3', name: '30° 胸托哑铃划船', sets: 3, reps: '12 次', tempo: '2-0-1-1', rpe: '7.5', rest: 75,
-        cue: '胸口贴稳凳面杜绝猛挺胸代偿；手肘外展约 45° 拉至与躯干平齐，专注中下斜方肌收缩。',
-        yellow: '调为掌心相对中立对握，避免手腕向小指侧撇腕。',
-        redName: '双侧绳索胸托划船（对握 + 助力带）',
-        red: '换用绳索对握配助力带，保持手腕稳定无剪力。'
+        id: 'd1_3', name: '坐姿划船（中立对握 · 控程红线）', sets: 4, reps: '10–12 次', tempo: '2-0-1-1', rpe: '7.5', rest: 80,
+        cue: '核心红线：拉至【手肘与躯干侧面齐平即止】，绝不为了夹背把手肘猛拽过身后撬动肱骨头；胸椎自然挺直不猛反弓，刻意多感受左侧背部发力。',
+        yellow: '使用双 D 把或对握 V 把保持直腕，左手戴双带护腕。',
+        redName: '单臂前臂绑带坐姿绳索划船（先练左侧）',
+        red: '用脚踝绑带直接套在左手前臂拉绳索，绕开左手腕同时彻底消除右侧代偿。'
       },
       {
-        id: 'd1_4', name: '哑铃锤式弯举', sets: 3, reps: '12 次', tempo: '2-0-1-0', rpe: '7.5', rest: 60,
-        cue: '全程对握直腕，天然避开杠铃与旋转反手弯举对下尺桡关节的剪切力。',
-        yellow: '左手戴双带护腕，严禁顶峰翻腕旋后。',
-        redName: '绳索对握锤式弯举（戴护腕 / 降重）',
-        red: '绳索张力更线性，减小重量保持绝对直腕，无弹响为红线。'
+        id: 'd1_4', name: '单臂绳索下拉（左侧领跑纠偏）', sets: 3, reps: '10–12 次/侧', tempo: '2-0-1-1', rpe: '7.5', rest: 60, leftLead: true,
+        cue: '非常契合你的单侧纠偏动作！【先练左侧定重定次】；对握 D 把沿体前约 30° 下拉至肘齐躯干侧面即止，别把肘部向后过度拉过身体。',
+        yellow: '保持前臂与绳索走向成一条直线、绝不撇腕，左手戴双带护腕。',
+        redName: '前臂绑带单臂绳索下拉（左侧领跑）',
+        red: '脚踝绑带套左手前臂远端下拉，左手腕零负荷且背阔肌孤立感更强。'
       }
     ],
     cooldown: {
-      id: 'd1_cd', name: '背日练后降调（松背阔肌 · 留肩袖状态）', sets: 2, reps: '5 次呼吸', tempo: '4-1-6 呼吸',
-      cue: '腋窝背阔肌轻滚 30 秒 + 肘撑四足位后背扩张呼吸。今天末尾绝不加练肩袖外旋力竭组，把稳定储备留给明天胸日。'
+      id: 'd1_cd', name: '背日练后降调（松背阔肌 · 留肩袖给明天胸日）', sets: 2, reps: '5 次呼吸', tempo: '4-1-6 呼吸',
+      cue: '腋窝背阔肌轻滚 30 秒 + 肘撑四足位后背扩张呼吸。今天末尾绝不刷肩袖外旋力竭组，把稳定储备留给明天胸日。'
     }
   },
   {
-    day: 2, code: 'D2', short: '胸日', title: '第 2 天：胸日（安全轨迹控量）',
-    sub: '物理截停防肱骨头前移，解决卧推左高右低，控制水平推总量',
+    day: 2, code: 'D2', short: '胸日', title: '第 2 天：胸日（卧推 + 双杠安全改造）',
+    sub: '保留你的精简 2 动作结构（刚好控制推拉比 ≈ 1:1.5），重点管住底部行程与左手腕',
     hasWarmup: true,
     items: [
       {
-        id: 'd2_1', name: '地板对握 / 微对握哑铃卧推', sets: 3, reps: '8–10 次', tempo: '3-1-1-0', rpe: '7.5', rest: 120, leftLead: true,
-        phaseOverride: { p3: { name: '短程平板哑铃卧推（底部留 2–3cm 缓冲）', badge: 'P3 进阶' } },
-        cue: '屈膝双脚踩实防反弓；肘内收 30°–45°，大臂触地稳停 1 秒防肱骨头前顶（不砸地反弹、底部不卸力前扣）。',
+        id: 'd2_1', name: '卧推：地板/控程哑铃卧推（或 Spoto 悬停杠铃卧推）', sets: 4, reps: '8–10 次', tempo: '3-1-1-0', rpe: '7.5', rest: 120, leftLead: true,
+        phaseOverride: { p3: { name: '卧推：短程平板哑铃/杠铃卧推（离胸 2–3cm 控停）', badge: 'P3 进阶' } },
+        cue: 'P1–P2 优先用【地板对握/微内八哑铃卧推】纠偏左右高低；若仍做杠铃卧推，执行【Spoto 悬停卧推】：下放至离胸 3–5cm 稳停 1 秒防肘过身后撬动肱骨头，肘内收 30°–45°，脚端架手机查左右水平。',
         interleave: '组间穿插：前 2 组休息间隙做 3 次肘撑四足位后背呼吸。',
-        yellow: '死守绝对直腕（哑铃压掌根靠大鱼际侧），左手戴双带护腕。',
+        yellow: '死守绝对直腕（杠/哑铃压在掌根靠大鱼际侧），左手戴双带护腕。',
         redName: '坐姿中立握推胸器（行程不超躯干后缘）',
-        red: '器械轨迹更稳，双手对握直腕发力，避免自由重量微晃压迫左手尺侧。'
+        red: '器械轨迹稳定且双手对握直腕，彻底避开自由重量塌腕压迫左手尺侧。'
       },
       {
-        id: 'd2_2', name: '20°–30° 微上斜哑铃推举', sets: 3, reps: '8–10 次', tempo: '3-1-1-0', rpe: '7.5', rest: 100, leftLead: true,
-        cue: '哑铃呈 30°–45° 微内八握法，底部保留 2–3cm 缓冲不触胸，手肘不明显落后于躯干平面。',
+        id: 'd2_2', name: '双杠臂屈伸（控程安全版 / 下斜绳索替代）', sets: 3, reps: '8–10 次', tempo: '3-1-1-0', rpe: '7–7.5', rest: 100, cautionBadge: '高危需控程',
+        cue: '⚠️ 双杠是肩前不稳与 TFCC 的头号高危动作，保留时死守 3 条线：① 优先用辅助器/弹力带减重；② 【下放到大臂接近水平/肘角约 90° 即止】，严禁深下沉让肩头前滚；③ 抓粗把、手腕绝对直立不向后折。只要肩前发顶或左腕发紧立刻切替代动作。',
         interleave: '组间穿插：前 2 组休息间隙做 8 次极轻阻力弹力带水平拉（Band Pull-Apart）。',
-        yellow: '改为掌心相对对握直腕 + 双带护腕。',
-        redName: '微上斜器械中立握推举',
-        red: '切换固定器械对握直腕推举，控制离心底部不塌腕。'
-      },
-      {
-        id: 'd2_3', name: '绳索中立位短程夹胸', sets: 3, reps: '12 次', tempo: '2-0-1-1', rpe: '7.5', rest: 75,
-        cue: '离心打开至【手肘与肩线齐平即止】，严禁大幅度向后拉伸肩前关节囊；暂停飞鸟与双杠臂屈伸。',
-        yellow: '适当降重死守直腕，不向小指侧撇腕。',
-        redName: '前臂绑带短程绳索夹胸',
-        red: '用脚踝绑带套在前臂位置完成夹胸，左手腕零负荷。'
-      },
-      {
-        id: 'd2_4', name: '绳索 V 杆 / 绳索三头下压', sets: 3, reps: '12 次', tempo: '2-0-1-0', rpe: '7.5', rest: 60,
-        cue: '上臂全程贴稳体侧，肩头绝不向前扣或耸肩借力。',
-        yellow: '换双头绳对握直腕下压，底端不向外猛掰手腕。',
-        redName: '绳索对握直腕下压（降重 + 护腕）',
-        red: '保持双头绳中立直腕、底端不外翻，无尺侧弹响即止。'
+        yellow: '左腕微紧/偶响时，直接改做【高位向下绳索推胸/夹胸】（模拟下胸轨迹，手肘不退过肩线，腕部零轴向挤压）。',
+        redName: '高位向下绳索推胸/夹胸（前臂绑带可选）',
+        red: '彻底撤掉双杠撑腕压迫与肩前极限伸展，用高位绳索斜向下推/夹胸无痛刺激下胸与三头。'
       }
     ],
     cooldown: {
@@ -689,45 +680,42 @@ const DAYS = [
     ]
   },
   {
-    day: 4, code: 'D4', short: '肩日', title: '第 4 天：肩日（稳定居中与后束得分日）',
-    sub: '斜向上肩胛平面推 + 后束主导 + 前锯肌与肩袖耐力收口，练完享 48h 上肢恢复窗',
+    day: 4, code: 'D4', short: '肩日', title: '第 4 天：肩日（绳索侧平举 + 改良面拉 + 稳定收口）',
+    sub: '保留你的 2 个肩部习惯动作并做防前移调角，末尾补齐前锯肌与肩袖居中稳定',
     hasWarmup: true,
     items: [
       {
-        id: 'd4_1', name: '半跪姿单臂地雷管推举', sets: 3, reps: '10 次/侧', tempo: '2-0-1-1', rpe: '7.5', rest: 90, leftLead: true,
-        cue: '左侧领跑；推左手跪左膝、收紧左臀防折腰顶肋骨；顶端顺势轻送肩胛骨前伸上旋 2–3cm，感受腋下前锯肌发力、不耸斜方肌上束。',
-        yellow: '左手死守绝对直腕 + 戴双带护腕，轻握杆头绝不塌腕。',
-        redName: '60° 高上斜对握哑铃推举（或前臂绑带低位绳索斜前推）',
-        red: '若顶推杆头易塌腕或弹响，立刻替换成对握哑铃或前臂绑带斜前推。'
+        id: 'd4_1', name: '绳索侧平举（30° 肩胛平面 · 左侧领跑）', sets: 4, reps: '12–15 次/侧', tempo: '2-0-1-0', rpe: '7.5', rest: 60, leftLead: true,
+        cue: '先练左侧定重定次；滑轮调至手腕/大腿中段高度，手臂沿身前约 30°（肩胛平面）抬起，高度控制在【略低于肩平约 75°–80°】即止，全程沉肩不耸斜方肌。',
+        yellow: '保持手腕中立直腕，避免向小指侧撇腕或刻意上翻小指。',
+        redName: '前臂绑带绳索 30° 侧平举（强烈推荐）',
+        red: '用脚踝绑带直接套在左手前臂拉绳索，彻底绕开左手腕且三角肌中束发力感更纯粹。'
       },
       {
-        id: 'd4_2', name: '30° 肩胛平面哑铃侧平举', sets: 3, reps: '12–15 次', tempo: '2-0-1-0', rpe: '7.5', rest: 60,
-        cue: '手臂在身前约 30° 方向举起，大拇指微朝上，抬至【略低于肩平约 75°–80°】即止，全程不耸肩。',
-        yellow: '保持直腕，避免小指侧上翻或尺偏。',
-        redName: '前臂绑带低位绳索 30° 侧平举',
-        red: '用脚踝绑带套在左手前臂拉低位绳索，零腕部负荷。'
+        id: 'd4_2', name: '中位控角绳索面拉（45°–60° 防前移版）', sets: 4, reps: '12–15 次', tempo: '2-0-1-1', rpe: '7.5', rest: 60,
+        phaseOverride: {
+          p2: { name: '中位绳索面拉（肘外展 60°–70° 稳定版）', badge: 'P2 进阶' },
+          p3: { name: '中高位绳索面拉（75°–85° 无代偿版）', badge: 'P3 进阶' }
+        },
+        cue: '关键改良：滑轮设在胸口至下巴高度而非过高位；拉向眉心/鼻梁时【手肘外展控制在 45°–60°】（避开 90°/90° 靠墙天使高危位），专注肩胛后倾与后束收缩，不顶肋骨、肩头不前顶。',
+        yellow: '双头绳掌心相对抓握，保持直腕不向外猛掰手腕。',
+        redName: '前臂套弹力带水平后拉 / 蝴蝶机反向飞鸟（对握）',
+        red: '绕开手腕外翻扭力，在无弹响的前提下完成同等后束与中下斜方刺激。'
       },
       {
-        id: 'd4_3', name: '30° 胸托哑铃后束飞鸟', sets: 4, reps: '12–15 次', tempo: '2-0-1-1', rpe: '7.5', rest: 60,
-        cue: '轻重量，手臂向斜后 45° 打开至与躯干平齐即止；避开高位过度外展外旋的猛拉面拉。',
-        yellow: '采用对握直腕，减小重量控节奏。',
-        redName: '坐姿蝴蝶机反向飞鸟（对握直腕）',
-        red: '换用固定器械掌心相对握把，控制向后打开不超过躯干平面。'
-      },
-      {
-        id: 'd4_4', name: '稳定强化 1：仰卧哑铃前伸（Serratus Punch）', sets: 3, reps: '12 次', tempo: '2-0-1-1', rpe: '7', rest: 60,
-        cue: '屈膝仰卧双臂垂直指天（呼吸顺畅体位），手肘微锁不动，仅靠肩胛骨轻推离床 3–5cm 再慢落，闭眼对比左右贴床对称感。',
+        id: 'd4_3', name: '康复补齐 1：仰卧哑铃前伸（Serratus Punch）', sets: 3, reps: '12 次', tempo: '2-0-1-1', rpe: '7', rest: 60,
+        cue: '专门补齐靠墙天使暴露的前锯肌上旋短板；屈膝仰卧双臂垂直指天（呼吸顺畅体位），手肘微锁，仅靠肩胛骨轻推离床 3–5cm 再慢落，闭眼对比左右对称感。',
         yellow: '轻重量直腕，戴双带护腕。',
         redName: '弹力带绕前臂仰卧前伸',
         red: '弹力带绕背后直接套在双侧前臂上推，完全卸除左手抓握负荷。'
       },
       {
-        id: 'd4_5', name: '稳定强化 2：侧卧轻哑铃 0° 外旋', sets: 3, reps: '12–15 次/侧', tempo: '3-0-1-1', rpe: '7.5–8', rest: 50, leftLead: true,
+        id: 'd4_4', name: '康复补齐 2：侧卧轻哑铃 0° 外旋', sets: 3, reps: '12–15 次/侧', tempo: '3-0-1-1', rpe: '7.5–8', rest: 50, leftLead: true,
         phaseOverride: {
-          p2: { name: '稳定强化 2：支撑位 45° 外展轻阻力外旋', badge: 'P2 进阶' },
-          p3: { name: '稳定强化 2：支撑位 75°–90° 外展外旋', badge: 'P3 进阶' }
+          p2: { name: '康复补齐 2：支撑位 45° 外展轻阻力外旋', badge: 'P2 进阶' },
+          p3: { name: '康复补齐 2：支撑位 75°–90° 外展外旋', badge: 'P3 进阶' }
         },
-        cue: '腋下夹折叠毛巾，3 秒慢放专注肩胛后侧深层发热；全程监控肩头不向前顶出。',
+        cue: '补齐后侧肩袖对肱骨头的居中稳定；腋下夹折叠毛巾，3 秒慢放专注肩胛后侧深层发热，肩头绝不前顶（练完享 48h 上肢恢复窗）。',
         yellow: '戴双带护腕保持绝对直腕，使用轻哑铃。',
         redName: '前臂绑带低位绳索外旋',
         red: '脚踝绑带套在前臂远端拉低位绳索，按当前阶段角度（0°/45°/75°）无痛完成。'
@@ -739,7 +727,7 @@ const DAYS = [
     }
   },
   {
-    day: 5, code: 'D5', short: '腿日', title: '第 5 天：腿日 + 核心（防扛杠牵拉）',
+    day: 5, code: 'D5', short: '腿日', title: '第 5 天：腿日 + 核心（保持原方案不变）',
     sub: '剔除传统背蹲对肩前关节囊的牵拉，用死虫归位肋骨并控量保留健腹轮',
     hasWarmup: false,
     items: [
@@ -925,6 +913,7 @@ function renderCard(item, prefix, allowLog) {
           ${isRed ? `<span class="ex-orig">${baseName}</span>` : ''}
           <h3 class="ex-name">
             ${isRed ? `<span class="ex-swap-badge">左腕红区替换</span>` : ''}
+            ${(!isRed && item.cautionBadge) ? `<span class="ex-caution-badge">${item.cautionBadge}</span>` : ''}
             ${(!isRed && pOv) ? `<span class="ex-upgrade-badge">${pOv.badge}</span>` : ''}
             ${displayName}
           </h3>
@@ -946,7 +935,7 @@ function renderCard(item, prefix, allowLog) {
         <div class="log-row">
           <label for="log_${item.id}">左侧基准</label>
           <input id="log_${item.id}" class="log-input" type="text"
-            placeholder="例：12kg × 10次（无前顶/无腕响）"
+            placeholder="例：重量 × 次数（无前顶/无腕响）"
             value="${(state.logs[item.id] || '').replace(/"/g, '&quot;')}"
             oninput="updateLog('${item.id}', this.value)" />
         </div>` : ''}
@@ -957,8 +946,8 @@ function renderCard(item, prefix, allowLog) {
 function renderReviewDay() {
   const r = state.review;
   const rows = [
-    { key: 'shoulder', label: '1. 肩前稳定度（推日与肩日有无肩头前顶/发空感）', opts: [['g','完全稳定 (0分)'],['y','偶发微紧'],['r','刺痛/明显前顶']] },
-    { key: 'scap', label: '2. 肩胛下缘反应（滑墙与外旋后有无迅速酸胀）', opts: [['g','无代偿酸胀'],['y','轻微发酸'],['r','迅速酸胀未改善']] },
+    { key: 'shoulder', label: '1. 肩前稳定度（卧推、双杠与肩日有无肩头前顶/发空感）', opts: [['g','完全稳定 (0分)'],['y','偶发微紧'],['r','刺痛/明显前顶']] },
+    { key: 'scap', label: '2. 肩胛下缘反应（滑墙、面拉与外旋后有无迅速酸胀）', opts: [['g','无代偿酸胀'],['y','轻微发酸'],['r','迅速酸胀未改善']] },
     { key: 'wrist', label: '3. 左手腕 TFCC 24小时反馈（练中与次日尺侧状态）', opts: [['g','无痛无明显弹响'],['y','微紧/偶响'],['r','尺侧隐痛/卡锁']] },
     { key: 'sternum', label: '4. 胸廓与日常体感（久坐胸骨弹响与呼吸顺畅度）', opts: [['g','更顺畅/弹响减'],['y','与之前持平'],['r','加重/呼吸更闷']] }
   ];
@@ -995,7 +984,6 @@ function render() {
   document.getElementById('tfccYellow').classList.toggle('active', state.tfcc === 'yellow');
   document.getElementById('tfccRed').classList.toggle('active', state.tfcc === 'red');
 
-  // Day nav
   const nav = document.getElementById('dayNav');
   nav.innerHTML = DAYS.map(d => {
     const st = getDayStats(d);
@@ -1058,7 +1046,7 @@ function render() {
     }
 
     if (cur.hasWarmup) {
-      html += `<div class="sec-head"><h2>主项与辅助训练 <span class="sec-tag">左侧领跑</span></h2></div>`;
+      html += `<div class="sec-head"><h2>主项与康复衔接 <span class="sec-tag">安全控程</span></h2></div>`;
     }
     cur.items.forEach(it => { html += renderCard(it, '', cur.day !== 3 && it.id !== 'd5_0'); });
 
